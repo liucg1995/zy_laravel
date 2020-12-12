@@ -31,9 +31,24 @@
                                 <td>{{$item->is_pub_arr}}</td>
                                 <td>{{$item->publish_time}}</td>
                                 <td>
-                                    <a href="{{ route('news.edit', $item->id) }}" class="btn  btn-sm" role="button">
-                                        <i class="far fa-edit"></i> 编辑
+                                    <span class="meta float-left">
+
+                                    <a href="{{ route('news.edit', $item->id) }}" class="btn  btn-xs" role="button">
+                                        <i class="far fa-edit"></i>
                                     </a>
+                                                                            </span>
+
+                                    <span class="meta float-left">
+                                    <form action="{{ route('news.destroy', $item->id) }}"
+                                          onsubmit="return confirm('确定要删除此评论？');"
+                                          method="post">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button type="submit" class="btn btn-xs">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                    </span>
                                 </td>
 
                             </tr>

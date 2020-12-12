@@ -13,10 +13,13 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "hashids/hashids": "^4.1",
+        "intervention/image": "^2.5",
         "laravel/framework": "^8.12",
         "laravel/jetstream": "^1.6",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
+        "liucg1995/laravel-uploader": "dev-master",
         "livewire/livewire": "^2.0"
     },
     "require-dev": {
@@ -65,5 +68,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories":[
+        {
+            "type":"git",
+            "url":"git@github.com:liucg1995/laravel_uploader.git"
+        }
+    ]
 }

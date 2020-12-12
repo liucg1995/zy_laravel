@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
+use App\Models\Upload;
+use App\Models\UploadMulti;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -27,10 +29,10 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(News $news)
     {
         //
-        return view('admin.news.create');
+        return view('admin.news.create', compact('news'));
     }
 
     /**
@@ -41,10 +43,14 @@ class NewsController extends Controller
      */
     public function store(Request $request, News $news)
     {
+
         //
         $news->fill($request->all());
         $news->user_id = Auth::guard('admin')->id();
         $news->save();
+
+
+        UploadMulti::save_multi_info($request->avatar, $news->id, 'news');
         return redirect()->to(route('news.index'))->with('success', '新闻创建成功！');
     }
 
@@ -67,6 +73,11 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
+
+        $news->upload_list = UploadMulti::get_multi_info($news->id, 'news');
+
+
+//        $a =   UploadMulti::where("rid",$news->id)->get();
         return view('admin.news.create', compact('news'));
     }
 
@@ -80,6 +91,11 @@ class NewsController extends Controller
     public function update(Request $request, News $news)
     {
         //
+        $news->update($request->all());
+
+        UploadMulti::save_multi_info($request->avatar, $news->id, 'news');
+
+        return redirect()->to(route('news.index'))->with('success', '更新成功！');
     }
 
     /**
@@ -91,5 +107,7 @@ class NewsController extends Controller
     public function destroy(News $news)
     {
         //
+        $news->delete();
+        return redirect()->to(route('news.index'))->with('success', '删除成功！');
     }
 }

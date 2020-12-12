@@ -22,9 +22,9 @@ class LoginController extends Controller
         $remember = $request->remember;
         if (Auth::guard('admin')->attempt($credentials,$remember)) {
             $user =  Auth::guard('admin')->user();
-            dump($user);
+//            dd($user);
             // 认证通过．．．
-            return redirect()->intended('admin');
+            return redirect('/admin/');
         }
 
     }
