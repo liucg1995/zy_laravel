@@ -22,7 +22,7 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
         $remember = $request->remember;
         if (Auth::attempt($credentials, $remember)) {
-            return redirect(route('admin.menu'));
+            return redirect(route('admin.home'));
         }else{
            return back()->withErrors(['密码错误']);
         }

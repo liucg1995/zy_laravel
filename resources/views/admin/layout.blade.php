@@ -66,7 +66,7 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd data-name="console">
-                                <a href="{{url('admin.index')}}">控制台</a>
+                                <a href="{{route('admin.home')}}">控制台</a>
                             </dd>
                         </dl>
                     </li>
@@ -93,7 +93,7 @@
                                                         @can($third['ident'])
                                                         <dl class="layui-nav-child">
                                                             <dd>
-                                                                <a href="{{url($third['uri'])}}">{{$third['title']}}</a>
+                                                                <a href="{{route($third['uri'])}}">{{$third['title']}}</a>
                                                             </dd>
                                                         </dl>
                                                         @endcan
@@ -101,7 +101,7 @@
                                                 @endif
 
                                             @else
-                                                <a href="{{url($second['uri'])}}">{{$second['title']}}</a>
+                                                <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
                                             @endif
                                         </dd>
                                     </dl>
