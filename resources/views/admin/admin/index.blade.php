@@ -46,7 +46,7 @@
                     , {field: 'username', title: '用户名'}
                     , {field: 'created_at', title: '创建时间'}
                     , {field: 'updated_at', title: '更新时间'}
-                    , {fixed: 'right', width: 120, align: 'center', toolbar: '#options'}
+                    , {fixed: 'right', width: 180, align: 'center', toolbar: '#options'}
                 ]]
             });
 

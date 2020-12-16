@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminBaseController;
 use App\Models\Menu;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class MenuController extends AdminBaseController
 {
@@ -15,8 +17,6 @@ class MenuController extends AdminBaseController
      */
     public function index()
     {
-
-        //
         return view('admin.menu.index');
     }
 
@@ -42,6 +42,10 @@ class MenuController extends AdminBaseController
     public function create()
     {
         //
+        $menus = Menu::get_list();
+
+
+        return view('admin.menu.create', compact('menus', 'permission_btn'));
     }
 
     /**
@@ -53,6 +57,34 @@ class MenuController extends AdminBaseController
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'title' => 'required|string',
+            'ident' => 'required|string',
+//            'icon' => 'required|string',
+//            'uri' => 'string',
+            'parent_id' => 'required|numeric',
+        ]);
+
+        $btns = $request->get('btns', []);
+
+        $menu = new Menu();
+        $menu->fill($request->only(['title', 'ident', 'icon', 'uri', 'parent_id']));
+        $res = $menu->save();
+
+//        dd($menu->title);
+
+
+//        $res = Menu::query()->create($request->only(['title', 'ident', 'icon', 'uri', 'parent_id']));
+
+        if ($res) {
+
+            Menu::save_permission_info($menu, $btns, $menu);
+
+
+            return redirect(route('admin.menu'))->with('success', '添加成功');
+        }
+
+        return back()->withErrors(['添加失败'])->withInput();
     }
 
     /**
@@ -75,6 +107,11 @@ class MenuController extends AdminBaseController
     public function edit($id)
     {
         //
+        $menu = Menu::query()->findOrFail($id);
+        $menus = Menu::get_list();
+
+
+        return view('admin.menu.edit', compact('menu', 'menus'));
     }
 
     /**
@@ -87,6 +124,27 @@ class MenuController extends AdminBaseController
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'title' => 'required|string',
+            'ident' => 'required|string',
+//            'icon' => 'required|string',
+//            'uri' => 'string',
+            'parent_id' => 'required|numeric',
+        ]);
+
+        $btns = $request->get('btns', []);
+        $permission_btn = config('backend.menu_permission');
+
+
+        $menu = $old_menu = Menu::query()->findOrFail($id);
+        $menu->fill($request->only(['title', 'ident', 'icon', 'uri', 'parent_id']));
+        $res = $menu->save();
+        if ($res) {
+            Menu::save_permission_info($menu, $btns, $old_menu);
+            return redirect(route('admin.menu'))->with('success', '修改成功');
+        }
+
+        return back()->withErrors(['添加失败'])->withInput();
     }
 
     /**
@@ -95,8 +153,18 @@ class MenuController extends AdminBaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $ids = $request->get('ids');
+        if (empty($ids)) {
+            return response()->json(['code' => 1, 'msg' => '请选择删除项']);
+        }
+        $menu = Menu::query()->findOrFail($ids);
+        $res = $menu->delete();
+        if ($res) {
+            return response()->json(['code' => 0, 'msg' => '删除成功']);
+        }
+        return response()->json(['code' => 1, 'msg' => '删除失败']);
     }
 }

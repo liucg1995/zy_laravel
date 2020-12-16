@@ -16,12 +16,12 @@ Route::prefix('admin')->group(function () {
             Route::get('/', 'HomeController@index');
             Route::resource('news', 'NewsController');
 
-
-//            Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class);
-            Route::get('menu/data', 'MenuController@data')->name('admin.menu.data');
-
-            Route::get('menu/create', 'MenuController@create')->name('admin.menu.create');
-            Route::post('menu/store', 'MenuController@store')->name('admin.menu.store');
+//
+////            Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class);
+//            Route::get('menu/data', 'MenuController@data')->name('admin.menu.data');
+//
+//            Route::get('menu/create', 'MenuController@create')->name('admin.menu.create');
+//            Route::post('menu/store', 'MenuController@store')->name('admin.menu.store');
 
 
             //管理员管理
@@ -55,6 +55,21 @@ Route::prefix('admin')->group(function () {
                 Route::put('role/{id}/update', 'RoleController@update')->name('admin.role.update');
                 //删除
                 Route::delete('role/destroy', 'RoleController@destroy')->name('admin.role.destroy');
+            });
+
+
+            // 角色管理
+            Route::group([], function () {
+                Route::get('menu', 'MenuController@index')->name('admin.menu');
+                Route::get('menu/data', 'MenuController@data')->name('admin.menu.data');
+                //添加
+                Route::get('menu/create', 'MenuController@create')->name('admin.menu.create');
+                Route::post('menu/store', 'MenuController@store')->name('admin.menu.store');
+                //编辑
+                Route::get('menu/{id}/edit', 'MenuController@edit')->name('admin.menu.edit');
+                Route::put('menu/{id}/update', 'MenuController@update')->name('admin.menu.update');
+                //删除
+                Route::delete('menu/destroy', 'MenuController@destroy')->name('admin.menu.destroy');
             });
 
         });

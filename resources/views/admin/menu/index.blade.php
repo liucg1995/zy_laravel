@@ -7,7 +7,6 @@
 {{--                @can('zixun.menu.create')--}}
                     <a class="layui-btn layui-btn-sm" href="{{ route('admin.menu.create') }}">添 加</a>
 {{--                @endcan--}}
-                    <button class="layui-btn layui-btn-sm" id="returnParent" pid="0">返回上级</button>
             </div>
         </div>
         <div class="layui-card-body">
@@ -15,7 +14,6 @@
             <script type="text/html" id="options">
                 <div class="layui-btn-group">
 {{--                    @can('zixun.menu')--}}
-                        <a class="layui-btn layui-btn-sm" lay-event="children">子分类</a>
 {{--                    @endcan--}}
 {{--                    @can('zixun.menu.edit')--}}
                         <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
@@ -45,11 +43,13 @@
                     ,cols: [[ //表头
                         {checkbox: true,fixed: true}
                         ,{field: 'id', title: 'ID', sort: true,width:80}
-                        ,{field: 'name', title: '分类名称'}
-                        ,{field: 'sort', title: '排序'}
+                        ,{field: 'ident', title: '菜单标识'}
+                        ,{field: 'title', title: '菜单名称'}
+                        ,{field: 'uri', title: '路由'}
+                        ,{field: 'icon', title: '图标'}
                         ,{field: 'created_at', title: '创建时间'}
                         ,{field: 'updated_at', title: '更新时间'}
-                        ,{fixed: 'right', width: 320, align:'center', toolbar: '#options'}
+                        ,{fixed: 'right', width: 120, align:'center', toolbar: '#options'}
                     ]]
                 });
 
@@ -59,7 +59,7 @@
                         ,layEvent = obj.event; //获得 lay-event 对应的值
                     if(layEvent === 'del'){
                         layer.confirm('确认删除吗？', function(index){
-                            $.post("/",{_method:'delete',ids:data.id},function (result) {
+                            $.post("{{route('admin.menu.destroy')}}",{_method:'delete',_token:'{{csrf_token()}}',ids:data.id},function (result) {
                                 if (result.code==0){
                                     obj.del(); //删除对应行（tr）的DOM结构
                                 }
@@ -69,15 +69,6 @@
                         });
                     } else if(layEvent === 'edit'){
                         location.href = '/admin/menu/'+data.id+'/edit';
-                    } else if (layEvent === 'children'){
-                        var pid = $("#returnParent").attr("pid");
-                        if (data.parent_id!=0){
-                            $("#returnParent").attr("pid",pid+'_'+data.parent_id);
-                        }
-                        dataTable.reload({
-                            where:{model:"permission",parent_id:data.id},
-                            page:{curr:1}
-                        })
                     }
                 });
 
