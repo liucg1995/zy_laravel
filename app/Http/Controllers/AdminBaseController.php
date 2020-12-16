@@ -11,7 +11,7 @@ class AdminBaseController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth.basic:admin'); //  登录中间件
+        $this->middleware('auth.basic'); //  登录中间件
     }
 
     /**
@@ -19,7 +19,7 @@ class AdminBaseController extends Controller
      */
     public function get_user_info()
     {
-        return Auth::guard('admin')->user();
+        return Auth::user();
     }
 
 }

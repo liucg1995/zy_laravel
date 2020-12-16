@@ -21,8 +21,8 @@ class LoginController extends Controller
     {
         $credentials = $request->only('username', 'password');
         $remember = $request->remember;
-        if (Auth::guard('admin')->attempt($credentials, $remember)) {
-            return redirect(route('admin.login'));
+        if (Auth::attempt($credentials, $remember)) {
+            return redirect(route('admin.menu'));
         }else{
            return back()->withErrors(['密码错误']);
         }
@@ -31,6 +31,7 @@ class LoginController extends Controller
 
     public function logout()
     {
+        Auth::logout();
         Auth::guard('admin')->logout();
         return redirect(route('admin.login'))->with('success','注销成功');
     }

@@ -26,15 +26,15 @@
 
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-{{--                <li class="layui-nav-item" lay-unselect>--}}
-{{--                    <a lay-href="{{route('admin.message.mine')}}" layadmin-event="message" lay-text="消息中心">--}}
-{{--                        <i class="layui-icon layui-icon-notice"></i>--}}
-{{--                        <!-- 如果有新消息，则显示小圆点 -->--}}
-{{--                        @if($unreadMessage)--}}
-{{--                            <span class="layui-badge-dot"></span>--}}
-{{--                        @endif--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                {{--                <li class="layui-nav-item" lay-unselect>--}}
+                {{--                    <a lay-href="{{route('admin.message.mine')}}" layadmin-event="message" lay-text="消息中心">--}}
+                {{--                        <i class="layui-icon layui-icon-notice"></i>--}}
+                {{--                        <!-- 如果有新消息，则显示小圆点 -->--}}
+                {{--                        @if($unreadMessage)--}}
+                {{--                            <span class="layui-badge-dot"></span>--}}
+                {{--                        @endif--}}
+                {{--                    </a>--}}
+                {{--                </li>--}}
 
                 <li class="layui-nav-item" lay-unselect style="margin-right: 10px">
                     <a href="javascript:;">
@@ -53,8 +53,8 @@
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
-                <div class="layui-logo" >
-                    <span>laravel5.5</span>
+                <div class="layui-logo">
+                    <span>laravel</span>
                 </div>
 
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
@@ -65,9 +65,51 @@
                             <cite>主页</cite>
                         </a>
                         <dl class="layui-nav-child">
-
+                            <dd data-name="console">
+                                <a href="{{url('admin.index')}}">控制台</a>
+                            </dd>
                         </dl>
                     </li>
+                    @foreach($layout_menus as $child)
+                        @can($child['ident'])
+{{--                        @if($user_info->can())--}}
+                            <li class="layui-nav-item layui-nav-itemed">
+                                <a href="javascript:;" lay-tips="{{$child['title']}}" lay-direction="2">
+                                    <i class="layui-icon layui-icon-home"></i>
+                                    <cite>{{$child['title']}}</cite>
+                                </a>
+                                @foreach($child['_child'] as $second)
+                                    @can($second['ident'])
+                                    <dl class="layui-nav-child">
+                                        <dd>
+                                            @if($second['_child'])
+                                                <a href="javascript:;" lay-tips="{{$second['title']}}">
+                                                    {{--                                                <i class="layui-icon layui-icon-home"></i>--}}
+                                                    <cite>{{$second['title']}}</cite>
+                                                </a>
+                                                @if($second['_child'])
+
+                                                    @foreach($second['_child'] as $third)
+                                                        @can($third['ident'])
+                                                        <dl class="layui-nav-child">
+                                                            <dd>
+                                                                <a href="{{url($third['uri'])}}">{{$third['title']}}</a>
+                                                            </dd>
+                                                        </dl>
+                                                        @endcan
+                                                    @endforeach
+                                                @endif
+
+                                            @else
+                                                <a href="{{url($second['uri'])}}">{{$second['title']}}</a>
+                                            @endif
+                                        </dd>
+                                    </dl>
+                                    @endcan
+                                @endforeach
+                            </li>
+                        @endcan
+                    @endforeach
 
                 </ul>
             </div>

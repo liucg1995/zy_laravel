@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminBaseController;
+use App\Models\Admin;
 use App\Models\Menu;
 use App\Models\Permission;
 use Illuminate\Http\Request;
@@ -17,6 +18,12 @@ class MenuController extends AdminBaseController
      */
     public function index()
     {
+
+       $user = $this->get_user_info();
+       $usera = $user->can('admin.system');
+
+//       dd($usera);
+
         return view('admin.menu.index');
     }
 

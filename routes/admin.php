@@ -1,19 +1,19 @@
 <?php
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['web'])->group(function () {
     Route::group(['namespace' => '\App\Http\Controllers\Admin\\'], function () {
         Route::get('login', 'LoginController@index')->name('admin.loginForm');
         Route::post('login', 'LoginController@store')->name('admin.login');
         Route::get('logout', 'LoginController@logout')->name('admin.logout');
     });
     // auth.base  登录中间件 ： 传参
-    Route::middleware(['auth.basic:admin'])->group(function () {
+    Route::middleware(['auth.basic'])->group(function () {
 
 
         Route::group(['namespace' => '\App\Http\Controllers\Admin\\'], function () {
 
-            Route::get('/', 'HomeController@index');
+            Route::get('/', 'HomeController@index')->name('admin.home');
             Route::resource('news', 'NewsController');
 
 //
