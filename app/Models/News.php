@@ -22,6 +22,8 @@ class News extends Model
         'intro',
         'publish_time',
         'is_pub',
+        'image',
+        'image_id'
     ];
 
     public function getIsPubArrAttribute($value)

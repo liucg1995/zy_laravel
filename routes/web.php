@@ -22,19 +22,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 Route::middleware(['web'])->group(function () {
 
+    Route::get('/test/index', [\App\Http\Controllers\TestController::class, 'index']);
+    Route::get('/test/test2', [\App\Http\Controllers\TestController::class, 'test2']);
+    Route::get('/test/test3', [\App\Http\Controllers\TestController::class, 'test3']);
 
-    Route::prefix('admin')->group(function () {
 
-        Route::get('login', [\App\Http\Controllers\LoginController::class, 'index'])->name('admin_login');
-        Route::post('login_post', [\App\Http\Controllers\LoginController::class, 'store'])->name('admin_login_post');
-        Route::get('logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('admin_logout');
-
-        // auth.base  登录中间件 ： 传参
-        Route::middleware(['auth.basic:admin'])->group(function () {
-            Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
-            Route::resource('news', \App\Http\Controllers\NewsController::class);
-        });
-    });
 
 });
 

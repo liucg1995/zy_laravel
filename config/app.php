@@ -179,6 +179,7 @@ return [
 
 
         Liucg1995\Uploader\UploaderServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
 
     ],
