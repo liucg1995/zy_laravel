@@ -36,7 +36,6 @@ class Menu extends Model
     public static function save_permission_info($menu, $btns, $old_menu = false)
     {
 
-        start_db_log();
         $per_btn = config('backend.menu_permission');
 
         $permission_list = Permission::query()->where(['menu_id' => $menu->id])->get();
@@ -49,7 +48,6 @@ class Menu extends Model
             'menu_id' => $menu->id,
             'btn' => 'list',
         ];
-        dump($old_menu->ident, Arr::pluck($permission_list,'name','id') );
 //        dd(array_search());
 
         if ((($id = array_search($old_menu->ident, Arr::pluck($permission_list,'name','id'))) !== false)) {
@@ -78,8 +76,7 @@ class Menu extends Model
             Permission::query()->whereIn('btn', $diff)->where(['menu_id' => $menu->id])->delete();
         }
 
-        echo_db_log();
-        dd(1);
+
 
     }
 
@@ -98,6 +95,7 @@ class Menu extends Model
             // 判断是不是与传入的栏目ID 相同
             if ($item[$parent_id] == $root) {
                 // 相同 将当前数据赋值给当前ID 的 数据
+                $item['level'] = $level;
                 $tree[$item[$pk]] = $item;
                 if ($level != 0) {
                     $tree[$item[$pk]]['title'] = str_repeat('&nbsp;', ($level - 1) * 3) . '&nbsp;&nbsp;┗━━' . $item['title'];

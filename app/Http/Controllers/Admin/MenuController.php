@@ -45,7 +45,7 @@ class MenuController extends AdminBaseController
         $menus = Menu::get_list();
 
 
-        return view('admin.menu.create', compact('menus', 'permission_btn'));
+        return view('admin.menu.create', compact('menus'));
     }
 
     /**
@@ -166,5 +166,17 @@ class MenuController extends AdminBaseController
             return response()->json(['code' => 0, 'msg' => '删除成功']);
         }
         return response()->json(['code' => 1, 'msg' => '删除失败']);
+    }
+
+
+    public function permission($id)
+    {
+        $menu = Menu::query()->findOrFail($id);
+        return view('admin.menu.permission' , compact('menu'));
+    }
+
+    public function permission_data(Request $request)
+    {
+
     }
 }

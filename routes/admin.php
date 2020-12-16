@@ -55,6 +55,9 @@ Route::prefix('admin')->group(function () {
                 Route::put('role/{id}/update', 'RoleController@update')->name('admin.role.update');
                 //删除
                 Route::delete('role/destroy', 'RoleController@destroy')->name('admin.role.destroy');
+
+                Route::get('role/{id}/permission', 'RoleController@permission')->name('admin.role.permission');
+                Route::put('role/{id}/assignPermission', 'RoleController@assignPermission')->name('admin.role.assignPermission');
             });
 
 
@@ -70,6 +73,25 @@ Route::prefix('admin')->group(function () {
                 Route::put('menu/{id}/update', 'MenuController@update')->name('admin.menu.update');
                 //删除
                 Route::delete('menu/destroy', 'MenuController@destroy')->name('admin.menu.destroy');
+
+
+            });
+
+
+            // 权限管理
+            Route::group([], function () {
+                Route::get('permission/{id}', 'PermissionController@index')->name('admin.permission');
+                Route::get('permission/data', 'PermissionController@data')->name('admin.permission.data');
+                //添加
+                Route::get('permission/create', 'PermissionController@create')->name('admin.permission.create');
+                Route::post('permission/store', 'PermissionController@store')->name('admin.permission.store');
+                //编辑
+                Route::get('permission/{id}/edit', 'PermissionController@edit')->name('admin.permission.edit');
+                Route::put('permission/{id}/update', 'PermissionController@update')->name('admin.permission.update');
+                //删除
+                Route::delete('permission/destroy', 'PermissionController@destroy')->name('admin.permission.destroy');
+
+
             });
 
         });

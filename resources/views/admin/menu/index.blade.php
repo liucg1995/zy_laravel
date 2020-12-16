@@ -18,6 +18,7 @@
 {{--                    @can('zixun.menu.edit')--}}
                         <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
 {{--                    @endcan--}}
+                        <a class="layui-btn layui-btn-sm" lay-event="edit">权限</a>
 {{--                    @can('zixun.menu.destroy')--}}
                         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 {{--                    @endcan--}}
@@ -49,7 +50,7 @@
                         ,{field: 'icon', title: '图标'}
                         ,{field: 'created_at', title: '创建时间'}
                         ,{field: 'updated_at', title: '更新时间'}
-                        ,{fixed: 'right', width: 120, align:'center', toolbar: '#options'}
+                        ,{fixed: 'right',  align:'center', toolbar: '#options'}
                     ]]
                 });
 

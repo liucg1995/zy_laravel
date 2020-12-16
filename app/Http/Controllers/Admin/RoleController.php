@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class RoleController extends Controller
 {
@@ -129,4 +132,59 @@ class RoleController extends Controller
         }
         return response()->json(['code' => 1, 'msg' => '删除失败']);
     }
+
+
+    /**
+     * @param $id
+     * 给 角色赋权限
+     */
+    public function permission($id)
+    {
+        $role = Role::query()->findOrFail($id);
+
+        $menus = Menu::get_list();
+
+        foreach ($menus as $index => $menu) {
+
+            $permission = Permission::query()->where('menu_id', $menu['id'])->get();
+            if ($permission->isNotEmpty()) {
+                foreach ($permission as $item) {
+
+                    $item->own = $role->hasPermissionTo($item->id) ? 'checked' : false;
+                    if ($item->btn == 'list') {
+                        $menus[$index]['list_id'] = $item;
+                    }
+                }
+                $menus[$index]['permission'] = $permission;
+            } else {
+                $menus[$index]['permission'] = [];
+            }
+
+            $menus[$index]['list_id']  = $menus[$index]['list_id'] ??  [];
+
+        }
+
+
+
+        return view('admin.role.permission', compact('role', 'menus'));
+    }
+
+
+    /**
+     * 存储权限
+     */
+    public function assignPermission(Request $request, $id)
+    {
+        $role = Role::findOrFail($id);
+        $permissions = $request->get('permissions');
+
+        if (empty($permissions)) {
+            $role->permissions()->detach();
+            return redirect()->to(route('admin.role'))->with(['status' => '已更新角色权限']);
+        }
+        $role->syncPermissions($permissions);
+        return redirect()->to(route('admin.role'))->with(['status' => '已更新角色权限']);
+    }
+
+
 }
