@@ -117,6 +117,22 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
             });
 
+            // 栏目管理
+            Route::group([], function () {
+                Route::get('website', 'WebsiteController@index')->name('admin.website');
+                Route::get('website/data', 'WebsiteController@data')->name('admin.website.data');
+                //添加
+                Route::get('website/create', 'WebsiteController@create')->name('admin.website.create');
+                Route::post('website/store', 'WebsiteController@store')->name('admin.website.store');
+                //编辑
+                Route::get('website/{id}/edit', 'WebsiteController@edit')->name('admin.website.edit');
+                Route::put('website/{id}/update', 'WebsiteController@update')->name('admin.website.update');
+                //删除
+                Route::delete('website/destroy', 'WebsiteController@destroy')->name('admin.website.destroy');
+
+
+            });
+
 
         });
 
