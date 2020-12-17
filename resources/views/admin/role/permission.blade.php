@@ -47,7 +47,7 @@
                                                            lay-skin="primary" {{$menu['list_id']['own']??''}} ></div>
                         </dt>
                         <dd>
-                            @if(isset($menu['permission']))
+                            @if(isset($menu['permission']) && $menu['level'])
                                 <div class="cate-third" style="margin-left: {{$menu['level']*3}}em">
                                     @foreach($menu['permission'] as $thild)
                                         <input type="checkbox" id="menu{{$menu['id']}}-{{$thild['id']}}"

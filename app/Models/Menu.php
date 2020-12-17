@@ -46,12 +46,12 @@ class Menu extends Model
         $per_btn = config('backend.menu_permission');
 
         $permission_list = Permission::query()->where(['menu_id' => $menu->id])->get();
-        $per_list = Arr::pluck($permission_list, 'name');
+//        $per_list = Arr::pluck($permission_list, 'name');
 
 
         $permission = [
             'name' => $menu->ident,
-            'show_name' => $menu->title,
+            'show_name' => $menu->title.':列表',
             'menu_id' => $menu->id,
             'btn' => 'list',
         ];
@@ -103,21 +103,30 @@ class Menu extends Model
         return $tree;
     }
 
-    public static function tree($list = [], $level = 0, $root = 0, $haschild = false, $pk = 'id', $parent_id = 'parent_id')
+    /**
+     * @param array $list           数组
+     * @param int $level            菜单第几级
+     * @param int $parent_id        父级ID
+     * @param bool $haschild        是否 以_child 字段保存
+     * @param string $pk
+     * @param string $parent_id_key
+     * @return array
+     *
+     */
+
+    public static function tree($list = [], $level = 0, $parent_id = 0, $haschild = false, $pk = 'id', $parent_id_key = 'parent_id')
     {
 
         $tree = [];
         foreach ($list as $key => $item) {
             // 判断是不是与传入的栏目ID 相同
-            if ($item[$parent_id] == $root) {
+            if ($item[$parent_id_key] == $parent_id) {
                 // 相同 将当前数据赋值给当前ID 的 数据
                 $item['level'] = $level;
                 $tree[$item[$pk]] = $item;
                 if ($level != 0 && !$haschild) {
 //                    │   │   ├
                     $tree[$item[$pk]]['title'] = str_repeat('         ', ($level ) ) . '├' . $item['title'];
-                }else{
-                    $tree[$item[$pk]]['title'] = '├' . $item['title'];
                 }
                 unset($list[$key]);
 

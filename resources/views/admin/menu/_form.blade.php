@@ -42,7 +42,7 @@
     <div class="layui-input-block">
         @foreach(config('backend.menu_permission') as $key => $btn)
             <input type="checkbox" name="btns[]" value="{{$key}}"
-                   title="{{$btn}}" @if(isset($menu->id)) {{ in_array($menu->ident.'.'.$key , Arr::pluck($menu->permissions , 'name')) ? 'checked' : ''  }}  @endif>
+                   title="{{$btn}}" @if(isset($menu->id)) {{ in_array($key , Arr::pluck($menu->permissions , 'btn')) ? 'checked' : ''  }}  @endif>
         @endforeach
     </div>
 </div>

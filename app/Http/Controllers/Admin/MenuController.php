@@ -140,7 +140,7 @@ class MenuController extends AdminBaseController
         ]);
 
         $btns = $request->get('btns', []);
-        $permission_btn = config('backend.menu_permission');
+
 
 
         $menu = $old_menu = Menu::query()->findOrFail($id);
