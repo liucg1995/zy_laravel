@@ -70,7 +70,7 @@ class AdminController extends AdminBaseController
         $rs = $admin->save();
 
         if ($rs) {
-            return redirect(route('admin.admin'))->with('success', '添加成功');
+            return redirect(route('admin.user'))->with('success', '添加成功');
 
         }
         return back()->withErrors(['添加失败'])->withInput();
@@ -125,9 +125,9 @@ class AdminController extends AdminBaseController
         ]);
         $category = Admin::findOrFail($id);
         if ($category->update($request->only(['email', 'password']))) {
-            return redirect(route('admin.admin'))->with(['status' => '更新成功']);
+            return redirect(route('admin.user'))->with(['status' => '更新成功']);
         }
-        return redirect(route('admin.admin'))->withErrors(['status' => '系统错误']);
+        return redirect(route('admin.user'))->withErrors(['status' => '系统错误']);
     }
 
     /**
@@ -170,8 +170,8 @@ class AdminController extends AdminBaseController
 
         $roles = $request->get('roles', []);
         if ($admin->syncRoles($roles)){
-            return redirect()->to(route('admin.admin'))->with(['status'=>'更新用户角色成功']);
+            return redirect()->to(route('admin.user'))->with(['status'=>'更新用户角色成功']);
         }
-        return redirect()->to(route('admin.admin'))->withErrors('系统错误');
+        return redirect()->to(route('admin.user'))->withErrors('系统错误');
     }
 }

@@ -17,7 +17,7 @@
     <label for="" class="layui-form-label">邮箱</label>
     <div class="layui-input-block">
         <input type="text" name="email" value="{{ $admin->email ?? old('email') }}" lay-verify="required"
-               placeholder="请输入用户名" class="layui-input">
+               placeholder="请输入邮箱" class="layui-input">
     </div>
 </div>
 
