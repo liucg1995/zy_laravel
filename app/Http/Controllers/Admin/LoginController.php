@@ -15,7 +15,10 @@ class LoginController extends Controller
         return view('admin.login.login');
     }
 
-
+    protected function redirectTo(Request $request)
+    {
+            return route('admin.login');
+    }
 
     public function store(Request $request)
     {

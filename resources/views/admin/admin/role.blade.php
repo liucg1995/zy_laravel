@@ -9,7 +9,7 @@
             <h2>用户【{{$admin->username}}】分配角色</h2>
         </div>
         <div class="layui-card-body">
-            <form class="layui-form" action="{{route('admin.admin.assignRole',['id'=>$admin->id])}}" method="post">
+            <form class="layui-form" action="{{route('admin.user.assignRole',['id'=>$admin->id])}}" method="post">
                 {{csrf_field()}}
                 {{method_field('put')}}
                 <div class="layui-form-item">
@@ -17,7 +17,7 @@
                     <div class="layui-input-block">
                         @forelse($roles as $role)
                             <div>
-                            <input type="checkbox" name="roles[]" value="{{$role->id}}" title="{{$role->name}}" {{ $role->own ? 'checked' : ''  }} >
+                            <input type="checkbox" name="roles[]" value="{{$role->id}}" title="{{$role->show_name}}" {{ $role->own ? 'checked' : ''  }} >
                             </div>
                         @empty
                             <div class="layui-form-mid layui-word-aux">还没有角色</div>
@@ -27,7 +27,7 @@
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">确 认</button>
-                        <a class="layui-btn" href="{{route('admin.admin')}}" >返 回</a>
+                        <a class="layui-btn" href="{{route('admin.user')}}" >返 回</a>
                     </div>
                 </div>
             </form>

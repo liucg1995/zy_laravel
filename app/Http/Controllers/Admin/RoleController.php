@@ -56,8 +56,9 @@ class RoleController extends Controller
         //
         $this->validate($request, [
             'name' => 'required|string',
+            'show_name' => 'required|string',
         ]);
-        $role = Role::create(['name' => $request->name]);
+        $role = Role::create(['name' => $request->name ,'show_name' => $request->show_name ,  ]);
         if ($role) {
             return redirect(route('admin.role'))->with('success', '添加成功');
         }
@@ -103,10 +104,12 @@ class RoleController extends Controller
         //
         $this->validate($request, [
             'name' => 'required|string',
+            'show_name' => 'required|string',
         ]);
         $role = Role::query()->findOrFail($id);
 
         $role->name = $request->name;
+        $role->show_name = $request->show_name;
 
         if ($role->save()) {
             return redirect(route('admin.role'))->with('success', '更新成功');

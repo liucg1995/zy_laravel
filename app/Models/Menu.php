@@ -88,7 +88,7 @@ class Menu extends Model
 
     public static function get_list($where = [])
     {
-        $list = self::where($where)->orderBy('parent_id', 'asc')->orderby('order', 'asc')->orderby('id', 'asc')->get()->toArray();
+        $list = self::query()->where($where)->orderBy('parent_id', 'asc')->orderby('order', 'asc')->orderby('id', 'asc')->get()->toArray();
 
         $tree = self::tree($list);
         return $tree;
@@ -114,7 +114,7 @@ class Menu extends Model
                 $item['level'] = $level;
                 $tree[$item[$pk]] = $item;
                 if ($level != 0 && !$haschild) {
-                    $tree[$item[$pk]]['title'] = str_repeat('&nbsp;', ($level - 1) * 3) . '&nbsp;&nbsp;┗━━' . $item['title'];
+                    $tree[$item[$pk]]['title'] = str_repeat('&nbsp;', ($level - 1) * 3) . '&nbsp;&nbsp;└──' . $item['title'];
                 }
                 unset($list[$key]);
 

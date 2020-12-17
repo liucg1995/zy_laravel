@@ -5,7 +5,7 @@
         <div class="layui-card-header layuiadmin-card-header-auto">
             <div class="layui-btn-group">
                 {{--                @can('zixun.category.create')--}}
-                <a class="layui-btn layui-btn-sm" href="{{ route('admin.admin.create') }}">添 加</a>
+                <a class="layui-btn layui-btn-sm" href="{{ route('admin.user.create') }}">添 加</a>
                 {{--                @endcan--}}
             </div>
         </div>
@@ -37,7 +37,7 @@
             //用户表格初始化
             var dataTable = table.render({
                 elem: '#dataTable'
-                , url: "{{ route('admin.admin.data') }}" //数据接口
+                , url: "{{ route('admin.user.data') }}" //数据接口
                 , page: true //开启分页
                 , cols: [[ //表头
                     {checkbox: true, fixed: true}
@@ -56,7 +56,7 @@
                     , layEvent = obj.event; //获得 lay-event 对应的值
                 if (layEvent === 'del') {
                     layer.confirm('确认删除吗？', function (index) {
-                        $.post("{{ route('admin.admin.destroy') }}", {
+                        $.post("{{ route('admin.user.destroy') }}", {
                             _method: 'delete',
                             _token: '{{csrf_token()}}',
                             ids: data.id
@@ -69,9 +69,9 @@
                         });
                     });
                 } else if (layEvent === 'edit') {
-                    location.href = '/admin/admin/' + data.id + '/edit';
+                    location.href = '/admin/user/' + data.id + '/edit';
                 } else if (layEvent === 'role') {
-                    location.href = '/admin/admin/' + data.id + '/role';
+                    location.href = '/admin/user/' + data.id + '/role';
                 }
             });
         })

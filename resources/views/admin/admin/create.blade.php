@@ -6,7 +6,7 @@
             <h2>添加管理员</h2>
         </div>
         <div class="layui-card-body">
-            <form class="layui-form" action="{{route('admin.admin.store')}}" method="post">
+            <form class="layui-form" action="{{route('admin.user.store')}}" method="post">
                 @include('admin.admin._form')
             </form>
         </div>

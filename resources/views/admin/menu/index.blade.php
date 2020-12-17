@@ -18,7 +18,7 @@
 {{--                    @can('zixun.menu.edit')--}}
                         <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
 {{--                    @endcan--}}
-                        <a class="layui-btn layui-btn-sm" lay-event="edit">权限</a>
+                        <a class="layui-btn layui-btn-sm" lay-event="permission">权限</a>
 {{--                    @can('zixun.menu.destroy')--}}
                         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
 {{--                    @endcan--}}
@@ -70,6 +70,8 @@
                         });
                     } else if(layEvent === 'edit'){
                         location.href = '/admin/menu/'+data.id+'/edit';
+                    }else if(layEvent === 'permission'){
+                        location.href = '/admin/permission/'+data.id+'';
                     }
                 });
 

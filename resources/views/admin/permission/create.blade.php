@@ -3,12 +3,11 @@
 @section('content')
     <div class="layui-card">
         <div class="layui-card-header layuiadmin-card-header-auto">
-            <h2>更新管理员</h2>
+            <h2>添加权限</h2>
         </div>
         <div class="layui-card-body">
-            <form class="layui-form" action="{{route('admin.user.update',['id'=>$admin->id])}}" method="post">
-                {{ method_field('put') }}
-                @include('admin.admin._form')
+            <form class="layui-form" action="{{route('admin.permission.store' , ['id'=>$id]) }}" method="post">
+                @include('admin.permission._form')
             </form>
         </div>
     </div>

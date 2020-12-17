@@ -1,8 +1,16 @@
 {{csrf_field()}}
 <div class="layui-form-item">
-    <label for="" class="layui-form-label">角色名</label>
+    <label for="" class="layui-form-label">角色标识</label>
     <div class="layui-input-block">
         <input type="text" name="name" value="{{ $role->name ?? old('name') }}" lay-verify="required"
+               placeholder="请输入角色标识" class="layui-input">
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <label for="" class="layui-form-label">角色名</label>
+    <div class="layui-input-block">
+        <input type="text" name="show_name" value="{{ $role->show_name ?? old('show_name') }}" lay-verify="required"
                placeholder="请输入角色名" class="layui-input">
     </div>
 </div>

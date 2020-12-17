@@ -11,7 +11,7 @@ class AdminBaseController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth.basic'); //  登录中间件
+        $this->middleware('auth.admin'); //  登录中间件
     }
 
     /**

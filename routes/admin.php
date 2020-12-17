@@ -7,14 +7,14 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
         Route::post('login', 'LoginController@store')->name('admin.login');
         Route::get('logout', 'LoginController@logout')->name('admin.logout');
     });
-    // auth.base  登录中间件 ： 传参
-    Route::middleware(['auth.basic'])->group(function () {
+    // auth.admin  登录中间件
+    Route::middleware(['auth.admin'])->group(function () {
 
 
         Route::group(['namespace' => '\App\Http\Controllers\Admin\\'], function () {
 
             Route::get('/', 'HomeController@index')->name('admin.home');
-            Route::resource('news', 'NewsController');
+//            Route::resource('news', 'NewsController');
 
 //
 ////            Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class);
@@ -26,22 +26,40 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
             //管理员管理
             Route::group([], function () {
-                Route::get('admin', 'AdminController@index')->name('admin.admin');
-                Route::get('admin/data', 'AdminController@data')->name('admin.admin.data');
+                Route::get('user', 'AdminController@index')->name('admin.user');
+                Route::get('user/data', 'AdminController@data')->name('admin.user.data');
                 //添加
-                Route::get('admin/create', 'AdminController@create')->name('admin.admin.create');
-                Route::post('admin/store', 'AdminController@store')->name('admin.admin.store');
+                Route::get('user/create', 'AdminController@create')->name('admin.user.create');
+                Route::post('user/store', 'AdminController@store')->name('admin.user.store');
                 //编辑
-                Route::get('admin/{id}/edit', 'AdminController@edit')->name('admin.admin.edit');
-                Route::put('admin/{id}/update', 'AdminController@update')->name('admin.admin.update');
+                Route::get('user/{id}/edit', 'AdminController@edit')->name('admin.user.edit');
+                Route::put('user/{id}/update', 'AdminController@update')->name('admin.user.update');
                 //删除
-                Route::delete('admin/destroy', 'AdminController@destroy')->name('admin.admin.destroy');
+                Route::delete('user/destroy', 'AdminController@destroy')->name('admin.user.destroy');
 
                 // 给管理员赋角色
-                Route::get('admin/{id}/role', 'AdminController@role')->name('admin.admin.role');
-                Route::put('admin/{id}/assignRole','AdminController@assignRole')->name('admin.admin.assignRole');
+                Route::get('user/{id}/role', 'AdminController@role')->name('admin.user.role');
+                Route::put('user/{id}/assignRole', 'AdminController@assignRole')->name('admin.user.assignRole');
 
             });
+
+
+            // 权限管理
+            Route::group([], function () {
+                Route::get('permission/{id}', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission');
+                Route::get('permission/data/{id}', 'PermissionController@data')->where('id', '[0-9]+')->name('admin.permission.data');
+                //添加
+                Route::get('permission/{id}/create', 'PermissionController@create')->where('id', '[0-9]+')->name('admin.permission.create');
+                Route::post('permission/{id}/store', 'PermissionController@store')->where('id', '[0-9]+')->name('admin.permission.store');
+                //编辑
+                Route::get('permission/{id}/edit', 'PermissionController@edit')->name('admin.permission.edit');
+                Route::put('permission/{id}/update', 'PermissionController@update')->name('admin.permission.update');
+                //删除
+                Route::delete('permission/destroy', 'PermissionController@destroy')->name('admin.permission.destroy');
+
+
+            });
+
 
             // 角色管理
             Route::group([], function () {
@@ -77,22 +95,6 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
             });
 
-
-            // 权限管理
-            Route::group([], function () {
-                Route::get('permission/{id}', 'PermissionController@index')->name('admin.permission');
-                Route::get('permission/data', 'PermissionController@data')->name('admin.permission.data');
-                //添加
-                Route::get('permission/create', 'PermissionController@create')->name('admin.permission.create');
-                Route::post('permission/store', 'PermissionController@store')->name('admin.permission.store');
-                //编辑
-                Route::get('permission/{id}/edit', 'PermissionController@edit')->name('admin.permission.edit');
-                Route::put('permission/{id}/update', 'PermissionController@update')->name('admin.permission.update');
-                //删除
-                Route::delete('permission/destroy', 'PermissionController@destroy')->name('admin.permission.destroy');
-
-
-            });
 
         });
 
