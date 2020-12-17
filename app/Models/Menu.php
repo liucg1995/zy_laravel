@@ -114,7 +114,10 @@ class Menu extends Model
                 $item['level'] = $level;
                 $tree[$item[$pk]] = $item;
                 if ($level != 0 && !$haschild) {
-                    $tree[$item[$pk]]['title'] = str_repeat('&nbsp;', ($level - 1) * 3) . '&nbsp;&nbsp;└──' . $item['title'];
+//                    │   │   ├
+                    $tree[$item[$pk]]['title'] = str_repeat('         ', ($level ) ) . '├' . $item['title'];
+                }else{
+                    $tree[$item[$pk]]['title'] = '├' . $item['title'];
                 }
                 unset($list[$key]);
 

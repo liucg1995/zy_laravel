@@ -41,13 +41,14 @@
 
                     <dl class="cate-box">
                         <dt>
-                            <div class="cate-first"><input id="menu{{$menu['id']}}" type="checkbox" name="permissions[]"
+                            <div class="cate-first">
+                                <input id="menu{{$menu['id']}}" type="checkbox" name="permissions[]"
                                                            value="{{$menu['list_id']['id']}}" title="{{$menu['title']}}"
                                                            lay-skin="primary" {{$menu['list_id']['own']??''}} ></div>
                         </dt>
                         <dd>
                             @if(isset($menu['permission']))
-                                <div class="cate-third">
+                                <div class="cate-third" style="margin-left: {{$menu['level']*3}}em">
                                     @foreach($menu['permission'] as $thild)
                                         <input type="checkbox" id="menu{{$menu['id']}}-{{$thild['id']}}"
                                                name="permissions[]" value="{{$thild['id']}}"

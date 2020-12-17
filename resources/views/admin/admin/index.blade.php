@@ -44,9 +44,10 @@
                     , {field: 'id', title: 'ID', sort: true, width: 80}
                     , {field: 'email', title: '邮箱'}
                     , {field: 'username', title: '用户名'}
+                    , {field: 'name', title: '姓名'}
                     , {field: 'created_at', title: '创建时间'}
                     , {field: 'updated_at', title: '更新时间'}
-                    , {fixed: 'right', width: 180, align: 'center', toolbar: '#options'}
+                    , {fixed: 'right',  align: 'center', toolbar: '#options'}
                 ]]
             });
 

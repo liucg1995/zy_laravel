@@ -38,11 +38,10 @@
 
                 <li class="layui-nav-item" lay-unselect style="margin-right: 10px">
                     <a href="javascript:;">
-                        <cite>贤心</cite>
+                        <cite>{{Auth::user()->name}}</cite>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                        <dd><a href="{{route('admin.profile')}}">基本资料</a></dd>
                         <hr>
                         <dd style="text-align: center;"><a href="{{route('admin.logout')}}">退出</a></dd>
                     </dl>
@@ -122,13 +121,13 @@
             <div class="layadmin-tabsbody-item layui-show">
 
 
-                <div class="layui-card layadmin-header">
-                    <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
-                        <a lay-href="">主页</a><span lay-separator="">/</span>
-                        <a><cite>组件</cite></a><span lay-separator="">/</span>
-                        <a><cite>辅助</cite></a>
-                    </div>
-                </div>
+{{--                <div class="layui-card layadmin-header">--}}
+{{--                    <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">--}}
+{{--                        <a lay-href="">主页</a><span lay-separator="">/</span>--}}
+{{--                        <a><cite>组件</cite></a><span lay-separator="">/</span>--}}
+{{--                        <a><cite>辅助</cite></a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <div class="layui-fluid">
                     <div class="layui-row">

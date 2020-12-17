@@ -23,6 +23,11 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 //            Route::get('menu/create', 'MenuController@create')->name('admin.menu.create');
 //            Route::post('menu/store', 'MenuController@store')->name('admin.menu.store');
 
+            Route::group([], function () {
+                //添加
+                Route::get('profile', 'ProfileController@index')->name('admin.profile');
+                Route::put('profile/update', 'ProfileController@update')->name('admin.profile.update');
+            });
 
             //管理员管理
             Route::group([], function () {
