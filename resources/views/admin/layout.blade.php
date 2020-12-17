@@ -9,6 +9,26 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="/static/admin/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/admin/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/vendor/uploader/css/uploader.css" media="all">
+    <link rel="stylesheet" href="/vendor/uploader/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="/vendor/uploader/css/webuploader.css" media="all">
+
+
+    <script src="/static/admin/layuiadmin/layui/layui.js"></script>
+    {{--<script>--}}
+    {{--    layui.config({--}}
+    {{--        base: '/static/admin/layuiadmin/' //静态资源所在路径--}}
+    {{--    }).extend({--}}
+    {{--        index: 'lib/index' //主入口模块--}}
+    {{--    }).use('index');--}}
+    {{--</script>--}}
+
+    {{--<script src="/js/jquery.min.js"></script>--}}
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    {{--<script src="/js/socket.io.js"></script>--}}
+    <script src="/static/admin/layuiadmin/layui/layui.js"></script>
+    <script src="/vendor/uploader/js/webuploader.js"></script>
+    <script src="/vendor/uploader/js/Mywebuploader.js"></script>
 
 </head>
 <body class="layui-layout-body">
@@ -142,19 +162,6 @@
     </div>
 </div>
 
-<script src="/static/admin/layuiadmin/layui/layui.js"></script>
-{{--<script>--}}
-{{--    layui.config({--}}
-{{--        base: '/static/admin/layuiadmin/' //静态资源所在路径--}}
-{{--    }).extend({--}}
-{{--        index: 'lib/index' //主入口模块--}}
-{{--    }).use('index');--}}
-{{--</script>--}}
-
-{{--<script src="/js/jquery.min.js"></script>--}}
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-{{--<script src="/js/socket.io.js"></script>--}}
-<script src="/static/admin/layuiadmin/layui/layui.js"></script>
 <script>
     $.ajaxSetup({
         headers: {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminBaseController;
+use App\Models\Menu;
 use App\Models\News;
 use App\Models\Upload;
 use App\Models\UploadMulti;
@@ -20,10 +21,25 @@ class NewsController extends AdminBaseController
      */
     public function index()
     {
+        return view('admin.news.index');
+    }
 
-        $data['news_list'] = News::paginate(5);
-        //
-        return view('admin.news.index', $data);
+    public function data(Request $request)
+    {
+        $res = News::query()->orderBy('id', 'desc')->paginate($request->get('limit', 30));
+        foreach ($res as $value) {
+            $value->is_pub = $value->is_pub_arr;
+        }
+
+        $res = $res->toArray();
+
+        $data = [
+            'code' => 0,
+            'msg' => '正在请求中...',
+            'count' => $res['total'],
+            'data' => $res['data']
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -31,10 +47,11 @@ class NewsController extends AdminBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(News $news)
+    public function create()
     {
+        $menus = Menu::get_list();
         //
-        return view('admin.news.create', compact('news'));
+        return view('admin.news.create', compact('menus'));
     }
 
     /**
@@ -43,18 +60,19 @@ class NewsController extends AdminBaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, News $news)
+    public function store(Request $request)
     {
 //        dd($request->all());
 
         //
+        $news = new News();
         $news->fill($request->all());
-        $news->user_id = Auth::guard('admin')->id();
+        $news->user_id = Auth::id();
         $news->save();
 
 
         UploadMulti::save_multi_info($request->file, $news->id, 'news');
-        return redirect()->to(route('news.index'))->with('success', '新闻创建成功！');
+        return redirect()->to(route('admin.news'))->with('success', '新闻创建成功！');
     }
 
     /**
@@ -74,9 +92,12 @@ class NewsController extends AdminBaseController
      * @param \App\Models\News $news
      * @return \Illuminate\Http\Response
      */
-    public function edit(News $news)
+    public function edit($id)
     {
-        return view('admin.news.create', compact('news'));
+        $menus = Menu::get_list();
+        $news = News::query()->findOrFail($id);
+
+        return view('admin.news.edit', compact('news', 'menus'));
     }
 
     /**
@@ -86,16 +107,17 @@ class NewsController extends AdminBaseController
      * @param \App\Models\News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(Request $request, $id)
     {
 
-//        dd($request->all());
         //
-        $news->update($request->all());
+        $news = News::query()->findOrFail($id);
+        $news->fill($request->all());
+        $news->save();
 
         UploadMulti::save_multi_info($request->file, $news->id, 'news');
 
-        return redirect()->to(route('news.index'))->with('success', '更新成功！');
+        return redirect()->to(route('admin.news'))->with('success', '更新成功！');
     }
 
     /**
@@ -104,10 +126,17 @@ class NewsController extends AdminBaseController
      * @param \App\Models\News $news
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Request $request)
     {
-        //
-        $news->delete();
-        return redirect()->to(route('news.index'))->with('success', '删除成功！');
+        $ids = $request->get('ids');
+        if (empty($ids)) {
+            return response()->json(['code' => 1, 'msg' => '请选择删除项']);
+        }
+        $menu = News::query()->findOrFail($ids);
+        $res = $menu->delete();
+        if ($res) {
+            return response()->json(['code' => 0, 'msg' => '删除成功']);
+        }
+        return response()->json(['code' => 1, 'msg' => '删除失败']);
     }
 }

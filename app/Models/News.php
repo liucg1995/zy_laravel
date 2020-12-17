@@ -16,6 +16,7 @@ class News extends Model
     public $flag = true;
 
     protected $fillable = [
+        'wid',
         'title',
         'source',
         'author',

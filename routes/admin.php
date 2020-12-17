@@ -23,6 +23,23 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 //            Route::get('menu/create', 'MenuController@create')->name('admin.menu.create');
 //            Route::post('menu/store', 'MenuController@store')->name('admin.menu.store');
 
+
+            // 角色管理
+            Route::group([], function () {
+                Route::get('news', 'NewsController@index')->name('admin.news');
+                Route::get('news/data', 'NewsController@data')->name('admin.news.data');
+                //添加
+                Route::get('news/create', 'NewsController@create')->name('admin.news.create');
+                Route::post('news/store', 'NewsController@store')->name('admin.news.store');
+                //编辑
+                Route::get('news/{id}/edit', 'NewsController@edit')->name('admin.news.edit');
+                Route::put('news/{id}/update', 'NewsController@update')->name('admin.news.update');
+                //删除
+                Route::delete('news/destroy', 'NewsController@destroy')->name('admin.news.destroy');
+
+            });
+
+
             Route::group([], function () {
                 //添加
                 Route::get('profile', 'ProfileController@index')->name('admin.profile');
