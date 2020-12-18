@@ -48,7 +48,7 @@
                         <a class="layui-btn layui-btn-sm" lay-event="audit">审核</a>
                     @endcan
                     @can('admin.news.destroy')
-                        @{{# if(d.is_pub){ }}
+                        @{{# if(!d.is_pub){ }}
                         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
                         @{{# } }}
                     @endcan
@@ -65,6 +65,8 @@
             pub_arr[0] = '未发布';
             pub_arr[1] = '已发布';
 
+            var wid_arr = {!! json_encode($website_arr) !!};
+
 
             layui.use(['layer', 'table', 'form'], function () {
                 var layer = layui.layer;
@@ -78,6 +80,9 @@
                     , cols: [[ //表头
                         {checkbox: true, fixed: true}
                         , {field: 'id', title: 'ID', sort: true}
+                        , {field: 'wid', title: '所属栏目', templet: function (d) {
+                                return wid_arr[d.wid]
+                            }}
                         , {field: 'title', title: '标题'}
                         , {field: 'source', title: '来源'}
                         , {field: 'author', title: '发布者'}

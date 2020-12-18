@@ -131,6 +131,20 @@ class MenusTableSeeder extends Seeder
                 'updated_at' => '2020-12-17 15:39:50',
                 'deleted_at' => NULL,
             ),
+            8 => 
+            array (
+                'id' => 9,
+                'parent_id' => 4,
+                'order' => 0,
+                'ident' => 'admin.permission',
+                'title' => '权限管理',
+                'icon' => NULL,
+                'uri' => 'admin.permission',
+                'permission' => NULL,
+                'created_at' => '2020-12-18 05:03:03',
+                'updated_at' => '2020-12-18 05:03:03',
+                'deleted_at' => NULL,
+            ),
         ));
         
         

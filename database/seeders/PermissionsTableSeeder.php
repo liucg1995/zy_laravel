@@ -355,6 +355,66 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2020-12-17 15:30:36',
                 'deleted_at' => NULL,
             ),
+            28 => 
+            array (
+                'id' => 37,
+                'name' => 'admin.permission',
+                'btn' => 'list',
+                'show_name' => '权限管理:列表',
+                'menu_id' => 9,
+                'guard_name' => 'web',
+                'created_at' => '2020-12-18 05:03:03',
+                'updated_at' => '2020-12-18 05:03:03',
+                'deleted_at' => NULL,
+            ),
+            29 => 
+            array (
+                'id' => 38,
+                'name' => 'admin.permission.create',
+                'btn' => 'create',
+                'show_name' => '权限管理:添加',
+                'menu_id' => 9,
+                'guard_name' => 'web',
+                'created_at' => '2020-12-18 05:03:03',
+                'updated_at' => '2020-12-18 05:03:03',
+                'deleted_at' => NULL,
+            ),
+            30 => 
+            array (
+                'id' => 39,
+                'name' => 'admin.permission.edit',
+                'btn' => 'edit',
+                'show_name' => '权限管理:修改',
+                'menu_id' => 9,
+                'guard_name' => 'web',
+                'created_at' => '2020-12-18 05:03:03',
+                'updated_at' => '2020-12-18 05:03:03',
+                'deleted_at' => NULL,
+            ),
+            31 => 
+            array (
+                'id' => 40,
+                'name' => 'admin.permission.destroy',
+                'btn' => 'destroy',
+                'show_name' => '权限管理:删除',
+                'menu_id' => 9,
+                'guard_name' => 'web',
+                'created_at' => '2020-12-18 05:03:03',
+                'updated_at' => '2020-12-18 05:03:03',
+                'deleted_at' => NULL,
+            ),
+            32 => 
+            array (
+                'id' => 41,
+                'name' => 'admin.menu.permission',
+                'btn' => 'other',
+                'show_name' => '菜单管理：菜单权限',
+                'menu_id' => 4,
+                'guard_name' => 'web',
+                'created_at' => '2020-12-18 05:27:58',
+                'updated_at' => '2020-12-18 05:27:58',
+                'deleted_at' => NULL,
+            ),
         ));
         
         

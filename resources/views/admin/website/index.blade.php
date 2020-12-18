@@ -4,23 +4,23 @@
     <div class="layui-card">
         <div class="layui-card-header layuiadmin-card-header-auto">
             <div class="layui-btn-group">
-{{--                @can('zixun.website.create')--}}
+                @can('admin.website.create')
                     <a class="layui-btn layui-btn-sm" href="{{ route('admin.website.create') }}">添 加</a>
-{{--                @endcan--}}
+                @endcan
             </div>
         </div>
         <div class="layui-card-body">
             <table id="dataTable" lay-filter="dataTable"></table>
             <script type="text/html" id="options">
                 <div class="layui-btn-group">
-{{--                    @can('zixun.website')--}}
-{{--                    @endcan--}}
-{{--                    @can('zixun.website.edit')--}}
+                    @can('admin.website')
+                    @endcan
+                    @can('admin.website.edit')
                         <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
-{{--                    @endcan--}}
-{{--                    @can('zixun.website.destroy')--}}
+                    @endcan
+                    @can('admin.website.destroy')
                         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
-{{--                    @endcan--}}
+                    @endcan
                 </div>
             </script>
         </div>
@@ -28,7 +28,7 @@
 @endsection
 
 @section('script')
-{{--    @can('zixun.website')--}}
+    @can('admin.website')
         <script>
             layui.use(['layer','table','form'],function () {
                 var layer = layui.layer;
@@ -86,5 +86,5 @@
                 })
             })
         </script>
-{{--    @endcan--}}
+    @endcan
 @endsection

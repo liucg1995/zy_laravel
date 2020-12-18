@@ -18,7 +18,16 @@ class ModelHasRolesTableSeeder extends Seeder
         \DB::table('roles')->delete();
 
         \DB::table('roles')->insert(array (
-
+            0 =>
+                array (
+                    'id' => 1,
+                    'name' => 'writer',
+                    'show_name' => NULL,
+                    'guard_name' => 'admin',
+                    'created_at' => '2020-12-15 01:35:01',
+                    'updated_at' => '2020-12-16 03:37:01',
+                    'deleted_at' => '2020-12-16 03:37:01',
+                ),
             1 =>
                 array (
                     'id' => 2,
@@ -70,7 +79,6 @@ class ModelHasRolesTableSeeder extends Seeder
                     'deleted_at' => NULL,
                 ),
         ));
-
         \DB::table('model_has_roles')->delete();
 
         \DB::table('model_has_roles')->insert(array (

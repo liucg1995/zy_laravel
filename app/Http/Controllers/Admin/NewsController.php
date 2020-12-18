@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\News;
 use App\Models\Upload;
 use App\Models\UploadMulti;
+use App\Models\Website;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,10 @@ class NewsController extends AdminBaseController
      */
     public function index()
     {
-        $list = News::query()->orderBy('id', 'desc')->paginate(2);
 
-        return view('admin.news.index', compact('list'));
+      $website_arr =  \Arr::pluck(   Website::query()->get() , 'title' , 'id');
+
+        return view('admin.news.index', compact('website_arr'));
     }
 
     public function data(Request $request)
@@ -46,7 +48,7 @@ class NewsController extends AdminBaseController
      */
     public function create()
     {
-        $menus = Menu::get_list();
+        $menus = Website::get_list();
         //
         return view('admin.news.create', compact('menus'));
     }
@@ -91,7 +93,7 @@ class NewsController extends AdminBaseController
      */
     public function edit($id)
     {
-        $menus = Menu::get_list();
+        $menus = Website::get_list();
         $news = News::query()->findOrFail($id);
 
         return view('admin.news.edit', compact('news', 'menus'));
