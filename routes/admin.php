@@ -67,12 +67,11 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
                 });
 
-
                 // 权限管理
-                Route::group(['middleware' => 'permission:admin.menu.permission'], function () {
-                    Route::get('permission', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission')->middleware('permission:admin.menu.permission');
-                    Route::get('permission/{id}', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission.menu')->middleware('permission:admin.menu.permission');
-                    Route::get('permission/data/{id}', 'PermissionController@data')->where('id', '[0-9]+')->name('admin.permission.data')->middleware('permission:admin.menu.permission');
+                Route::group(['middleware' => 'permission:admin.permission'], function () {
+                    Route::get('permission', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission')->middleware('permission:admin.permission');
+                    Route::get('permission/{id}', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission.menu')->middleware('permission:admin.permission');
+                    Route::get('permission/data/{id}', 'PermissionController@data')->where('id', '[0-9]+')->name('admin.permission.data')->middleware('permission:admin.permission');
                     //添加
                     Route::get('permission/{id}/create', 'PermissionController@create')->where('id', '[0-9]+')->name('admin.permission.create')->middleware('permission:admin.permission.create');
                     Route::post('permission/{id}/store', 'PermissionController@store')->where('id', '[0-9]+')->name('admin.permission.store')->middleware('permission:admin.permission.create');
@@ -84,7 +83,6 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
 
                 });
-
 
                 // 角色管理
                 Route::group(['middleware' => 'permission:admin.role'], function () {
@@ -102,7 +100,6 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
                     Route::get('role/{id}/permission', 'RoleController@permission')->name('admin.role.permission')->middleware('role_or_permission:super_role|admin.role.permission');
                     Route::put('role/{id}/assignPermission', 'RoleController@assignPermission')->name('admin.role.assignPermission')->middleware('role_or_permission:super_role|admin.role.permission');;
                 });
-
 
                 // 菜单管理
                 Route::group(['middleware' => 'permission:admin.menu'], function () {

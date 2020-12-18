@@ -17,7 +17,7 @@
                     @can('admin.menu.edit')
                         <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
                     @endcan
-                    @can('admin.menu.permission')
+                    @can('admin.permission')
                         <a class="layui-btn layui-btn-sm" lay-event="permission">菜单权限</a>
                     @endcan
 
