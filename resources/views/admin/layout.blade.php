@@ -76,9 +76,7 @@
                 <div class="layui-logo">
                     <span>laravel</span>
                 </div>
-
-                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
-                    lay-filter="layadmin-system-side-menu">
+                <ul class="layui-nav layui-nav-tree  layui-inline" lay-filter="demo">
                     <li data-name="home" class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;" lay-tips="主页" lay-direction="2">
                             <i class="layui-icon layui-icon-home"></i>
@@ -90,45 +88,35 @@
                             </dd>
                         </dl>
                     </li>
+
                     @foreach($layout_menus as $child)
                         @can($child['ident'])
-{{--                        @if($user_info->can())--}}
-                            <li class="layui-nav-item layui-nav-itemed">
-                                <a href="javascript:;" lay-tips="{{$child['title']}}" lay-direction="2">
-                                    <i class="layui-icon layui-icon-home"></i>
-                                    <cite>{{$child['title']}}</cite>
-                                </a>
+                            <li class="layui-nav-item @if(strpos($child['ident'] , $route_name) == false ) layui-nav-itemed @endif "  >
+                                <a href="javascript:;">{{$child['title']}}</a>
+
                                 @foreach($child['_child'] as $second)
                                     @can($second['ident'])
-                                    <dl class="layui-nav-child">
-                                        <dd>
-                                            @if($second['_child'])
-                                                <a href="javascript:;" lay-tips="{{$second['title']}}">
-                                                    {{--                                                <i class="layui-icon layui-icon-home"></i>--}}
-                                                    <cite>{{$second['title']}}</cite>
-                                                </a>
+                                        <dl class="layui-nav-child ">
+                                            <dd class=" @if(strpos($second['ident'] , $route_name) == false ) layui-nav-itemed @endif">
                                                 @if($second['_child'])
-                                                    <dl class="layui-nav-child">
-                                                        <dd>
-                                                            <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
-                                                        </dd>
-                                                    </dl>
+                                                    <a href="javascript:;">{{$second['title']}}</a>
+
                                                     @foreach($second['_child'] as $third)
                                                         @can($third['ident'])
-                                                        <dl class="layui-nav-child">
-                                                            <dd>
-                                                                <a href="{{route($third['uri'])}}">{{$third['title']}}</a>
-                                                            </dd>
-                                                        </dl>
+                                                            <dl class="layui-nav-child">
+                                                                <dd>
+                                                                    <a href="{{route($third['uri'])}}">{{$third['title']}}</a>
+                                                                </dd>
+                                                            </dl>
                                                         @endcan
                                                     @endforeach
-                                                @endif
 
-                                            @else
-                                                <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
-                                            @endif
-                                        </dd>
-                                    </dl>
+                                                @else
+                                                    <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
+                                                @endif
+                                            </dd>
+                                        </dl>
+
                                     @endcan
                                 @endforeach
                             </li>
@@ -136,6 +124,7 @@
                     @endforeach
 
                 </ul>
+
             </div>
         </div>
 
@@ -146,13 +135,13 @@
             <div class="layadmin-tabsbody-item layui-show">
 
 
-{{--                <div class="layui-card layadmin-header">--}}
-{{--                    <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">--}}
-{{--                        <a lay-href="">主页</a><span lay-separator="">/</span>--}}
-{{--                        <a><cite>组件</cite></a><span lay-separator="">/</span>--}}
-{{--                        <a><cite>辅助</cite></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                <div class="layui-card layadmin-header">--}}
+                {{--                    <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">--}}
+                {{--                        <a lay-href="">主页</a><span lay-separator="">/</span>--}}
+                {{--                        <a><cite>组件</cite></a><span lay-separator="">/</span>--}}
+                {{--                        <a><cite>辅助</cite></a>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
                 <div class="layui-fluid">
                     <div class="layui-row">
