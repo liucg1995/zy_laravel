@@ -74,7 +74,7 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
                     Route::get('permission/data/{id}', 'PermissionController@data')->where('id', '[0-9]+')->name('admin.permission.data')->middleware('permission:admin.permission');
                     //添加
                     Route::get('permission/{id}/create', 'PermissionController@create')->where('id', '[0-9]+')->name('admin.permission.create')->middleware('permission:admin.permission.create');
-                    Route::post('permission/{id}/store', 'PermissionController@store')->where('id', '[0-9]+')->name('admin.permission.store')->middleware('permission:admin.permission.create');
+                    Route::post('permission/store', 'PermissionController@store')->where('id', '[0-9]+')->name('admin.permission.store')->middleware('permission:admin.permission.create');
                     //编辑
                     Route::get('permission/{id}/edit', 'PermissionController@edit')->name('admin.permission.edit')->middleware('permission:admin.permission.edit');
                     Route::put('permission/{id}/update', 'PermissionController@update')->name('admin.permission.update')->middleware('permission:admin.permission.edit');

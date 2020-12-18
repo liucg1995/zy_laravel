@@ -19,6 +19,7 @@
 <div class="layui-form-item">
     <div class="layui-input-block">
         <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">确 认</button>
+        <input type="hidden" name="previous_url" value="{{URL::previous()}}" id="">
         <a class="layui-btn" href="{{URL::previous()}}">返 回</a>
     </div>
 </div>

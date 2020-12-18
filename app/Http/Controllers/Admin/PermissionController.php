@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminBaseController;
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,9 @@ class PermissionController extends AdminBaseController
     public function create(Request $request, $id = false)
     {
         //
-        return view('admin.permission.create', compact('id'));
+
+        $menus = Menu::get_list();
+        return view('admin.permission.create', compact('id', 'menus'));
     }
 
 
@@ -54,7 +57,7 @@ class PermissionController extends AdminBaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $menu_id = false)
+    public function store(Request $request)
     {
         //
 
@@ -64,13 +67,12 @@ class PermissionController extends AdminBaseController
         ]);
 
         $permission = new Permission;
-        $permission->fill($request->only(['name', 'show_name']));
-        $permission->menu_id = $menu_id;
+        $permission->fill($request->only(['name', 'show_name', 'menu_id']));
         $permission->btn = 'other';
         $rs = $permission->save();
 
         if ($rs) {
-            return redirect(route('admin.permission', ['id' => $menu_id]))->with('success', '权限添加成功');
+            return redirect($request->get('previous_url'))->with('success', '权限添加成功');
         }
 
         return back()->withErrors(['添加失败'])->withInput();
@@ -121,7 +123,7 @@ class PermissionController extends AdminBaseController
         $rs = $permission->save();
 
         if ($rs) {
-            return redirect(route('admin.permission', ['id' => $permission->menu_id]))->with('success', '权限更新成功');
+            return redirect($request->get('previous_url'))->with('success', '权限更新成功');
         }
 
         return back()->withErrors(['更新失败'])->withInput();
