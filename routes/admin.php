@@ -100,12 +100,12 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
                 //删除
                 Route::delete('role/destroy', 'RoleController@destroy')->name('admin.role.destroy')->middleware('permission:admin.role.destroy');
 
-                Route::get('role/{id}/permission', 'RoleController@permission')->name('admin.role.permission')->middleware('permission:');
-                Route::put('role/{id}/assignPermission', 'RoleController@assignPermission')->name('admin.role.assignPermission')->middleware('permission:');
+                Route::get('role/{id}/permission', 'RoleController@permission')->name('admin.role.permission')->middleware('permission:admin.role.permission');
+                Route::put('role/{id}/assignPermission', 'RoleController@assignPermission')->name('admin.role.assignPermission')->middleware('permission:admin.role.permission');
             });
 
 
-            // 角色管理
+            // 菜单管理
             Route::group([], function () {
                 Route::get('menu', 'MenuController@index')->name('admin.menu')->middleware('permission:admin.menu');
                 Route::get('menu/data', 'MenuController@data')->name('admin.menu.data')->middleware('permission:admin.menu');

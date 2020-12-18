@@ -91,30 +91,36 @@
 
                     @foreach($layout_menus as $child)
                         @can($child['ident'])
-                            <li class="layui-nav-item @if(strpos($child['ident'] , $route_name) == false ) layui-nav-itemed @endif "  >
+                            <li class="layui-nav-item layui-nav-itemed " data-ident="{{$child['ident']}}"
+                                data-route="{{$route_name}}">
                                 <a href="javascript:;">{{$child['title']}}</a>
-
                                 @foreach($child['_child'] as $second)
                                     @can($second['ident'])
-                                        <dl class="layui-nav-child ">
-                                            <dd class=" @if(strpos($second['ident'] , $route_name) == false ) layui-nav-itemed @endif">
-                                                @if($second['_child'])
+                                        <dl class="layui-nav-child layui-nav-itemed ">
+                                            @if($second['_child'])
+                                                <dd class="layui-nav-itemed">
                                                     <a href="javascript:;">{{$second['title']}}</a>
-
-                                                    @foreach($second['_child'] as $third)
-                                                        @can($third['ident'])
-                                                            <dl class="layui-nav-child">
-                                                                <dd>
+                                                    <dl class="layui-nav-child ">
+                                                        @if($second['uri'])
+                                                        <dd class=" @if(strpos($second['ident'] , $route_name) !== false ) layui-this @endif">
+                                                            <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
+                                                        </dd>
+                                                        @endif
+                                                        @foreach($second['_child'] as $third)
+                                                            @can($third['ident'])
+                                                                <dd class=" @if(strpos($third['ident'] , $route_name) !== false ) layui-this @endif">
                                                                     <a href="{{route($third['uri'])}}">{{$third['title']}}</a>
                                                                 </dd>
-                                                            </dl>
-                                                        @endcan
-                                                    @endforeach
+                                                            @endcan
+                                                        @endforeach
+                                                    </dl>
 
-                                                @else
+                                                </dd>
+                                            @else
+                                                <dd class=" @if(strpos($second['ident'] , $route_name) !== false ) layui-this @endif">
                                                     <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
-                                                @endif
-                                            </dd>
+                                                </dd>
+                                            @endif
                                         </dl>
 
                                     @endcan

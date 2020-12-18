@@ -415,6 +415,18 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2020-12-18 05:27:58',
                 'deleted_at' => NULL,
             ),
+            33 => 
+            array (
+                'id' => 42,
+                'name' => 'admin.role.permission',
+                'btn' => 'other',
+                'show_name' => '角色管理:赋权限',
+                'menu_id' => 3,
+                'guard_name' => 'web',
+                'created_at' => '2020-12-18 06:51:44',
+                'updated_at' => '2020-12-18 06:51:44',
+                'deleted_at' => NULL,
+            ),
         ));
         
         
