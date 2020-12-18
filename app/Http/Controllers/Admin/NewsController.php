@@ -21,18 +21,15 @@ class NewsController extends AdminBaseController
      */
     public function index()
     {
-        return view('admin.news.index');
+        $list = News::query()->orderBy('id', 'desc')->paginate(2);
+
+        return view('admin.news.index', compact('list'));
     }
 
     public function data(Request $request)
     {
-        $res = News::query()->orderBy('id', 'desc')->paginate($request->get('limit', 30));
-        foreach ($res as $value) {
-            $value->is_pub = $value->is_pub_arr;
-        }
 
-        $res = $res->toArray();
-
+        $res = News::get_data($request->only('title', 'is_pub'), $request->get('limit', 30));
         $data = [
             'code' => 0,
             'msg' => '正在请求中...',

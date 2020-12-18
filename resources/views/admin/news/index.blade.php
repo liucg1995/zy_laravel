@@ -10,17 +10,47 @@
             </div>
         </div>
         <div class="layui-card-body">
+            <div class="layui-form layui-search-form layui-form-pane">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="title"   autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">发布状态</label>
+                        <div class="layui-input-inline">
+                            <select name="interest" id="is_pub" lay-filter="aihao">
+                                <option value="">请选择</option>
+                                <option value="0">未发布</option>
+                                <option value="1">已发布</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <button class="layui-btn search" id="searchBtn" data-type="getInfo" lay-filter="demo2">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table id="dataTable" lay-filter="dataTable"></table>
             <script type="text/html" id="options">
                 <div class="layui-btn-group">
                     @can('admin.news.edit')
                         <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
                     @endcan
+
                     @can('admin.news.audit')
                         <a class="layui-btn layui-btn-sm" lay-event="audit">审核</a>
                     @endcan
                     @can('admin.news.destroy')
+                        @{{# if(d.is_pub){ }}
                         <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
+                        @{{# } }}
                     @endcan
                 </div>
             </script>
@@ -31,6 +61,11 @@
 @section('script')
     @can('admin.news')
         <script>
+            var pub_arr = new Array();
+            pub_arr[0] = '未发布';
+            pub_arr[1] = '已发布';
+
+
             layui.use(['layer', 'table', 'form'], function () {
                 var layer = layui.layer;
                 var form = layui.form;
@@ -47,7 +82,11 @@
                         , {field: 'source', title: '来源'}
                         , {field: 'author', title: '发布者'}
                         , {field: 'publish_time', title: '发布时间'}
-                        , {field: 'is_pub', title: '发布状态'}
+                        , {
+                            field: 'is_pub', title: '发布状态', templet: function (d) {
+                                return pub_arr[d.is_pub]
+                            }
+                        }
                         , {fixed: 'right', align: 'center', toolbar: '#options'}
                     ]]
                 });
@@ -74,7 +113,49 @@
                         location.href = '/admin/news/' + data.id + '/edit';
                     }
                 });
+
+                $('#searchBtn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+                // 点击获取数据
+                var active = {
+                    getInfo: function () {
+                        var title = $('#title').val();
+                        // var startTime=$('#startTime').val();
+                        // var endTime=$('#endTime').val();
+                        var is_pub = $('#is_pub').val();
+                        if (title || is_pub) {
+                            var index = layer.msg('查询中，请稍候...', {icon: 16, time: false, shade: 0});
+                            setTimeout(function () {
+                                table.reload('dataTable', {
+                                    where: {
+                                        'title': title,
+                                        'is_pub': is_pub
+                                    }
+                                });
+                                layer.close(index);
+                            }, 800);
+                        } else {
+                            table.reload('dataTable', {
+                                where: {
+                                    'title': title,
+                                    'is_pub': is_pub
+                                }
+                            });
+                        }
+                    },
+                };
+
+
             })
+
+
+
+
+
+
         </script>
     @endcan
 @endsection

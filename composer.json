@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.5",
         "liucg1995/laravel-uploader": "dev-master",
         "livewire/livewire": "^2.0",
+        "orangehill/iseed": "^3.0",
         "spatie/laravel-permission": "^3.18"
     },
     "require-dev": {

@@ -142,6 +142,9 @@ class PermissionController extends AdminBaseController
             return response()->json(['code' => 1, 'msg' => '请选择删除项']);
         }
         $menu = Permission::query()->findOrFail($ids);
+        if ($menu->btn == 'list') {
+            return response()->json(['code' => 1, 'msg' => '列表权限禁止删除']);
+        }
         $res = $menu->delete();
         if ($res) {
             return response()->json(['code' => 0, 'msg' => '删除成功']);

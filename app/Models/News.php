@@ -33,9 +33,40 @@ class News extends Model
             0 => '未发布',
             1 => '已发布',
         ];
-        return  $pub_arr[$this->is_pub];
+        return $pub_arr[$this->is_pub];
     }
 
+    public static function get_data($where, $limit)
+    {
+
+        $query = self::_where($where);
+        return $query->paginate($limit)->toArray();
+
+    }
+
+    private static function _where($where = [])
+    {
+
+        $query = News::query();
+
+        if ($where) {
+
+            foreach ($where as $index => $item) {
+
+                if ($item === null || $item === '') {
+                    continue;
+                }
+
+                $query = $query->where($index, $item);
+
+            }
+
+        }
+
+        return $query;
+
+
+    }
 
 
 }

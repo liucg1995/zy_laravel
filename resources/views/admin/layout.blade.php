@@ -9,6 +9,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="/static/admin/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/admin/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/admin/css/style.css" media="all">
     <link rel="stylesheet" href="/vendor/uploader/css/uploader.css" media="all">
     <link rel="stylesheet" href="/vendor/uploader/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="/vendor/uploader/css/webuploader.css" media="all">
