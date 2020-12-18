@@ -91,7 +91,7 @@ class Menu extends Model
         $list = self::query()->where($where)->orderBy('parent_id', 'asc')->orderby('order', 'asc')->orderby('id', 'asc')->get()->toArray();
 
         $tree = self::tree($list);
-        return $tree;
+        return array_column($tree,null);
     }
 
     public static function get_list_menu($where = [])
@@ -121,6 +121,7 @@ class Menu extends Model
         foreach ($list as $key => $item) {
             // 判断是不是与传入的栏目ID 相同
             if ($item[$parent_id_key] == $parent_id) {
+//                dump($item);
                 // 相同 将当前数据赋值给当前ID 的 数据
                 $item['level'] = $level;
                 $tree[$item[$pk]] = $item;
@@ -146,7 +147,6 @@ class Menu extends Model
 
             }
         }
-
         return $tree;
 
     }

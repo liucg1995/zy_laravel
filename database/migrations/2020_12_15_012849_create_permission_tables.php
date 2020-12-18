@@ -23,7 +23,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('show_name');
+            $table->string('show_name')->nullable(true);
             $table->string('btn',20);
             $table->integer('menu_id');
             $table->string('guard_name');
@@ -34,7 +34,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('show_name');
+            $table->string('show_name')->nullable(true);
             $table->string('guard_name');
             $table->timestamps();
             $table->softDeletes();

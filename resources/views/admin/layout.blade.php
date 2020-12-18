@@ -108,7 +108,11 @@
                                                     <cite>{{$second['title']}}</cite>
                                                 </a>
                                                 @if($second['_child'])
-
+                                                    <dl class="layui-nav-child">
+                                                        <dd>
+                                                            <a href="{{route($second['uri'])}}">{{$second['title']}}</a>
+                                                        </dd>
+                                                    </dl>
                                                     @foreach($second['_child'] as $third)
                                                         @can($third['ident'])
                                                         <dl class="layui-nav-child">

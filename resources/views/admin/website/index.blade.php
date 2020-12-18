@@ -42,11 +42,8 @@
                     ,page: true //开启分页
                     ,cols: [[ //表头
                         {checkbox: true,fixed: true}
-                        ,{field: 'id', title: 'ID', sort: true,width:80}
-                        ,{field: 'ident', title: '菜单标识'}
+                        ,{field: 'id', title: 'ID',width:80}
                         ,{field: 'title', title: '菜单名称'}
-                        ,{field: 'uri', title: '路由'}
-                        ,{field: 'icon', title: '图标'}
                         ,{field: 'created_at', title: '创建时间'}
                         ,{field: 'updated_at', title: '更新时间'}
                         ,{fixed: 'right',  align:'center', toolbar: '#options'}

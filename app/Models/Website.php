@@ -86,7 +86,7 @@ class Website extends Model
         $list = self::query()->where($where)->orderBy('parent_id', 'asc')->orderby('order', 'asc')->orderby('id', 'asc')->get()->toArray();
 
         $tree = self::tree($list);
-        return $tree;
+        return array_column($tree,null);
     }
 
     public static function get_list_menu($where = [])

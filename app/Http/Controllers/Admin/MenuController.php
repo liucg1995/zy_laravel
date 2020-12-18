@@ -34,10 +34,13 @@ class MenuController extends AdminBaseController
         $data = [
             'code' => 0,
             'msg' => '正在请求中...',
+            'data' => $list,
             'count' => count($list),
-            'data' => $list
         ];
-        return response()->json($data);
+
+
+        echo json_encode($data);
+//        return response()->json($data);
 
     }
 

@@ -68,7 +68,8 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
             // 权限管理
             Route::group([], function () {
-                Route::get('permission/{id}', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission');
+                Route::get('permission', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission');
+                Route::get('permission/{id}', 'PermissionController@index')->where('id', '[0-9]+')->name('admin.permission.menu');
                 Route::get('permission/data/{id}', 'PermissionController@data')->where('id', '[0-9]+')->name('admin.permission.data');
                 //添加
                 Route::get('permission/{id}/create', 'PermissionController@create')->where('id', '[0-9]+')->name('admin.permission.create');

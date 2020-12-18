@@ -37,7 +37,6 @@
             //用户表格初始化
             var dataTable = table.render({
                 elem: '#dataTable'
-                , height: 500
                 , url: "{{ route('admin.permission.data' , ['id'=>$id]) }}" //数据接口
                 , page: true //开启分页
                 , cols: [[ //表头

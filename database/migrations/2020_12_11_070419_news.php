@@ -25,8 +25,8 @@ class News extends Migration
             $table->date('publish_time')->nullable(true);
             $table->integer('is_pub');
             $table->integer('view')->default('0');
-            $table->string('photo')->nullable(true);
-            $table->string('file')->nullable(true);
+            $table->string('image')->nullable(true);
+            $table->string('image_id')->nullable(true);
             $table->timestamps();
             $table->softDeletes();
         });

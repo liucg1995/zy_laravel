@@ -14,7 +14,7 @@ class PermissionController extends AdminBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($id = 0)
     {
         //
         return view('admin.permission.index', compact('id'));
