@@ -76,7 +76,6 @@ class PermissionController extends AdminBaseController
 
         $permission = new Permission;
         $permission->fill($request->only(['name', 'show_name', 'route' ,'parent_id']));
-        $permission->btn = 'other';
         $rs = $permission->save();
 
         if ($rs) {
@@ -166,9 +165,6 @@ class PermissionController extends AdminBaseController
             return response()->json(['code' => 1, 'msg' => '请选择删除项']);
         }
         $menu = Permission::query()->findOrFail($ids);
-        if ($menu->btn == 'list') {
-            return response()->json(['code' => 1, 'msg' => '列表权限禁止删除']);
-        }
         $res = $menu->delete();
         if ($res) {
             return response()->json(['code' => 0, 'msg' => '删除成功']);

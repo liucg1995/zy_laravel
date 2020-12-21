@@ -11,7 +11,7 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
     Route::middleware(['auth.admin'])->group(function () {
 
 
-        Route::group(['namespace' => '\App\Http\Controllers\Admin\\'], function () {
+        Route::group(['namespace' => '\App\Http\Controllers\Admin\\', 'middleware' => 'operate_log'], function () {
 
             Route::get('/', 'HomeController@index')->name('admin.home');
 
@@ -22,31 +22,8 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
                 Route::get('profile', 'ProfileController@index')->name('admin.profile');
                 Route::put('profile/update', 'ProfileController@update')->name('admin.profile.update');
             });
-//            Route::resource('news', 'NewsController');
 
-//
-////            Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class);
-//            Route::get('menu/data', 'MenuController@data')->name('admin.menu.data');
-//
-//            Route::get('menu/create', 'MenuController@create')->name('admin.menu.create');
-//            Route::post('menu/store', 'MenuController@store')->name('admin.menu.store');
-
-
-            // 新闻管理
-            Route::group(['middleware' => 'permission:system.news'], function () {
-                Route::get('news', 'NewsController@index')->name('admin.news')->middleware('permission:admin.news');
-                Route::get('news/data', 'NewsController@data')->name('admin.news.data')->middleware('permission:admin.news');
-                //添加
-                Route::get('news/create', 'NewsController@create')->name('admin.news.create')->middleware('permission:admin.news.create');
-                Route::post('news/store', 'NewsController@store')->name('admin.news.store')->middleware('permission:admin.news.create');
-                //编辑
-                Route::get('news/{id}/edit', 'NewsController@edit')->name('admin.news.edit')->middleware('permission:admin.news.edit');
-                Route::put('news/{id}/update', 'NewsController@update')->name('admin.news.update')->middleware('permission:admin.news.edit');
-                //删除
-                Route::delete('news/destroy', 'NewsController@destroy')->name('admin.news.destroy')->middleware('permission:admin.news.destroy');
-
-            });
-
+            // 系统管理
             Route::group(['middleware' => 'permission:admin.system'], function () {
                 //管理员管理
                 Route::group(['middleware' => 'permission:admin.user'], function () {
@@ -101,6 +78,25 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
                     Route::put('role/{id}/assignPermission', 'RoleController@assignPermission')->name('admin.role.assignPermission')->middleware('role_or_permission:super_role|admin.role.permission');;
                 });
 
+                // 登录日志管理
+                Route::group(['middleware' => 'permission:admin.loginlog'], function () {
+                    Route::get('loginlog', 'LoginlogController@index')->name('admin.loginlog')->middleware('permission:admin.loginlog');
+                    Route::get('loginlog/data', 'LoginlogController@data')->name('admin.loginlog.data')->middleware('permission:admin.loginlog');
+                    //删除
+                    Route::delete('loginlog/destroy', 'LoginlogController@destroy')->name('admin.loginlog.destroy')->middleware('permission:admin.loginlog.destroy');
+
+
+                });
+                // 登录日志管理
+                Route::group(['middleware' => 'permission:admin.operatelog'], function () {
+                    Route::get('operatelog', 'OperatelogController@index')->name('admin.operatelog')->middleware('permission:admin.operatelog');
+                    Route::get('operatelog/data', 'OperatelogController@data')->name('admin.operatelog.data')->middleware('permission:admin.operatelog');
+                    //删除
+                    Route::delete('operatelog/destroy', 'OperatelogController@destroy')->name('admin.operatelog.destroy')->middleware('permission:admin.operatelog.destroy');
+
+
+                });
+
                 // 菜单管理
                 Route::group(['middleware' => 'permission:admin.menu'], function () {
                     Route::get('menu', 'MenuController@index')->name('admin.menu')->middleware('permission:admin.menu');
@@ -116,6 +112,22 @@ Route::prefix('admin')->middleware(['web'])->group(function () {
 
 
                 });
+            });
+
+
+            // 新闻管理
+            Route::group(['middleware' => 'permission:system.news'], function () {
+                Route::get('news', 'NewsController@index')->name('admin.news')->middleware('permission:admin.news');
+                Route::get('news/data', 'NewsController@data')->name('admin.news.data')->middleware('permission:admin.news');
+                //添加
+                Route::get('news/create', 'NewsController@create')->name('admin.news.create')->middleware('permission:admin.news.create');
+                Route::post('news/store', 'NewsController@store')->name('admin.news.store')->middleware('permission:admin.news.create');
+                //编辑
+                Route::get('news/{id}/edit', 'NewsController@edit')->name('admin.news.edit')->middleware('permission:admin.news.edit');
+                Route::put('news/{id}/update', 'NewsController@update')->name('admin.news.update')->middleware('permission:admin.news.edit');
+                //删除
+                Route::delete('news/destroy', 'NewsController@destroy')->name('admin.news.destroy')->middleware('permission:admin.news.destroy');
+
             });
 
             // 栏目管理
