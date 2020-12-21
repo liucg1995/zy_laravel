@@ -15,24 +15,20 @@ class PermissionController extends AdminBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = 0)
+    public function index()
     {
         //
-        return view('admin.permission.index', compact('id'));
+        return view('admin.permission.index');
     }
 
-    public function data(Request $request, $menu_id = false)
+    public function data(Request $request)
     {
-        $query = Permission::query();
-        if ($menu_id) {
-            $query = $query->where('menu_id', $menu_id);
-        }
-        $res = $query->paginate($request->get('limit'))->toArray();
+        $res = Permission::query()->get();
         $data = [
             'code' => 0,
             'msg' => '正在请求中...',
-            'count' => $res['total'],
-            'data' => $res['data']
+            'count' => $res->count(),
+            'data' => $res
         ];
         return response()->json($data);
     }
@@ -42,12 +38,23 @@ class PermissionController extends AdminBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id = false)
+    public function create(Request $request)
     {
         //
 
-        $menus = Menu::get_list();
-        return view('admin.permission.create', compact('id', 'menus'));
+        $permissions = Permission::query()->with('childs')->where('parent_id', 0)->get();
+        $permission_arr = [];
+        foreach ($permissions as $val) {
+            $permission_arr[] = $val;
+            if ($val['childs']) {
+                foreach ($val['childs'] as $index => $child) {
+                    $child['show_name'] = '         ' . '├' . $child['show_name'];
+                    $permission_arr[] = $child;
+                }
+            }
+        }
+
+        return view('admin.permission.create', compact('permission_arr'));
     }
 
 
@@ -62,12 +69,13 @@ class PermissionController extends AdminBaseController
         //
 
         $this->validate($request, [
+            'parent_id' => 'required|numeric',
             'name' => 'required|string',
             'show_name' => 'required|string',
         ]);
 
         $permission = new Permission;
-        $permission->fill($request->only(['name', 'show_name', 'menu_id']));
+        $permission->fill($request->only(['name', 'show_name', 'route' ,'parent_id']));
         $permission->btn = 'other';
         $rs = $permission->save();
 
@@ -99,7 +107,20 @@ class PermissionController extends AdminBaseController
     {
         //
         $permission = Permission::query()->findOrFail($id);
-        return view('admin.permission.edit', compact('permission'));
+        $permissions = Permission::query()->with('childs')->where('parent_id', 0)->get();
+        $permission_arr = [];
+        foreach ($permissions as $val) {
+            $permission_arr[] = $val;
+            if ($val['childs']) {
+                foreach ($val['childs'] as $index => $child) {
+                    $child['show_name'] = '         ' . '├' . $child['show_name'];
+                    $permission_arr[] = $child;
+                }
+            }
+        }
+
+
+        return view('admin.permission.edit', compact('permission' , 'permission_arr'));
     }
 
     /**
@@ -114,12 +135,13 @@ class PermissionController extends AdminBaseController
         //
 
         $this->validate($request, [
+            'parent_id' => 'required|numeric',
             'name' => 'required|string',
             'show_name' => 'required|string',
         ]);
 
         $permission = Permission::query()->findOrFail($id);
-        $permission->fill($request->only(['name', 'show_name']));
+        $permission->fill($request->only(['name', 'show_name', 'route' ,'parent_id']));
         $rs = $permission->save();
 
         if ($rs) {

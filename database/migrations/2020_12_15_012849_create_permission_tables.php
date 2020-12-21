@@ -24,8 +24,8 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('show_name')->nullable(true);
-            $table->string('btn',20);
-            $table->integer('menu_id');
+            $table->string('route',30)->nullable(true);
+            $table->integer('parent_id')->default('0');
             $table->string('guard_name');
             $table->timestamps();
             $table->softDeletes();

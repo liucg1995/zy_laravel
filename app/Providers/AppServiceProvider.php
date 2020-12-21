@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Menu;
+use App\Models\Permission;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -35,7 +36,9 @@ class AppServiceProvider extends ServiceProvider
 
             $user_info = \Auth::user();
 
-            $layout_menus = Menu::get_list_menu();
+            $layout_menus = Permission::query()->where('parent_id',0)->with('childs')->get();
+
+
 
             $route_name = Route::currentRouteName();
 

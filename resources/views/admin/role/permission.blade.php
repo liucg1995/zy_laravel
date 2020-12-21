@@ -37,24 +37,40 @@
             <form action="{{route('admin.role.assignPermission',['id'=>$role->id])}}" method="post" class="layui-form">
                 {{csrf_field()}}
                 {{method_field('put')}}
-                @forelse($menus as $menu)
+                @forelse($permission_arr as $permission)
 
                     <dl class="cate-box">
                         <dt>
                             <div class="cate-first">
-                                <input id="menu{{$menu['id']}}" type="checkbox" name="permissions[]"
-                                                           value="{{$menu['list_id']['id']}}" title="{{$menu['title']}}"
-                                                           lay-skin="primary" {{$menu['list_id']['own']??''}} ></div>
+                                <input id="menu{{$permission['id']}}" type="checkbox" name="permissions[]"
+                                       value="{{$permission['id']}}" title="{{$permission['show_name']}}"
+                                       lay-skin="primary" {{$permission->own ??''}} ></div>
                         </dt>
                         <dd>
-                            @if(isset($menu['permission']) &&  count($menu['permission']) > 1)
-                                <div class="cate-third" style="margin-left: {{$menu['level']*3}}em">
-                                    @foreach($menu['permission'] as $thild)
-                                        <input type="checkbox" id="menu{{$menu['id']}}-{{$thild['id']}}"
-                                               name="permissions[]" value="{{$thild['id']}}"
-                                               title="{{$thild['show_name']}}" lay-skin="primary" {{$thild['own']??''}}>
-                                    @endforeach
-                                </div>
+                            @if($permission->childs->isNotEmpty())
+                                @foreach($permission->childs as $p2)
+                                    @if($p2->childs->isNotEmpty())
+                                        <div class="cate-third">
+                                            <input type="checkbox" id="menu{{$permission['id']}}-{{$p2['id']}}"
+                                                   name="permissions[]" value="{{$p2['id']}}"
+                                                   title="{{$p2['show_name']}}" lay-skin="primary" {{$p2->own ??''}}>
+                                        </div>
+                                        <div class="cate-third" style="margin-left: 3em">
+                                            @foreach($p2->childs as $p3)
+                                                <input type="checkbox" id="menu{{$permission['id']}}-{{$p3['id']}}"
+                                                       name="permissions[]" value="{{$p3['id']}}"
+                                                       title="{{$p3['show_name']}}"
+                                                       lay-skin="primary" {{$p3->own ??''}}>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="cate-third">
+                                            <input type="checkbox" id="menu{{$permission['id']}}-{{$p2['id']}}"
+                                                   name="permissions[]" value="{{$p2['id']}}"
+                                                   title="{{$p2['show_name']}}" lay-skin="primary" {{$p2->own ??''}}>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endif
                         </dd>
                     </dl>

@@ -58,7 +58,7 @@ class RoleController extends Controller
             'name' => 'required|string',
             'show_name' => 'required|string',
         ]);
-        $role = Role::create(['name' => $request->name ,'show_name' => $request->show_name ,  ]);
+        $role = Role::create(['name' => $request->name, 'show_name' => $request->show_name,]);
         if ($role) {
             return redirect(route('admin.role'))->with('success', '添加成功');
         }
@@ -145,31 +145,26 @@ class RoleController extends Controller
     {
         $role = Role::query()->findOrFail($id);
 
-        $menus = Menu::get_list();
 
-        foreach ($menus as $index => $menu) {
+        $permission_arr = Permission::query()->with('thirdchilds')->where('parent_id', 0)->get();
 
-            $permission = Permission::query()->where('menu_id', $menu['id'])->get();
-            if ($permission->isNotEmpty()) {
-                foreach ($permission as $item) {
-
-                    $item->own = $role->hasPermissionTo($item->id) ? 'checked' : false;
-                    if ($item->btn == 'list') {
-                        $menus[$index]['list_id'] = $item;
+        foreach ($permission_arr as $p1) {
+            $p1->own = $role->hasPermissionTo($p1->id) ? 'checked' : false;
+            if ($p1->childs->isNotEmpty()) {
+                foreach ($p1->childs as $p2) {
+                    $p2->own = $role->hasPermissionTo($p2->id) ? 'checked' : false;
+                    if ($p2->childs->isNotEmpty()) {
+                        foreach ($p2->childs as $p3) {
+                            $p3->own = $role->hasPermissionTo($p3->id) ? 'checked' : false;
+                        }
                     }
                 }
-                $menus[$index]['permission'] = $permission;
-            } else {
-                $menus[$index]['permission'] = [];
             }
-
-            $menus[$index]['list_id']  = $menus[$index]['list_id'] ??  [];
 
         }
 
 
-
-        return view('admin.role.permission', compact('role', 'menus'));
+        return view('admin.role.permission', compact('role', 'permission_arr'));
     }
 
 

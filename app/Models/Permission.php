@@ -11,5 +11,19 @@ class Permission extends \Spatie\Permission\Models\Permission
     use HasFactory;
     use SoftDeletes;
 
-    protected  $fillable = [ 'name','show_name','menu_id','guard_name','btn'];
+    protected $fillable = ['name', 'show_name', 'menu_id', 'guard_name', 'btn', 'parent_id'];
+
+    //子权限
+    public function childs()
+    {
+        return $this->hasMany('App\Models\Permission', 'parent_id', 'id');
+    }
+
+
+    //三级子权限
+    public function thirdchilds()
+    {
+        return $this->childs()->with('childs');
+    }
+
 }
