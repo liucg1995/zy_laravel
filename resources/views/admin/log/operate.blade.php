@@ -72,7 +72,7 @@
                                 layer.msg(result.msg)
                             });
                         });
-                    } 
+                    }
                 });
 
                 $('#searchBtn').on('click', function () {
