@@ -178,13 +178,6 @@ return [
         App\Providers\JetstreamServiceProvider::class,
 
 
-        Liucg1995\Uploader\UploaderServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
-
-
-
-        Orangehill\Iseed\IseedServiceProvider::class,
-
 
     ],
 

@@ -1,6 +1,6 @@
 <?php
 return [
-
+    'disk' => 'public',
     'attach' => [
         'path' => '/attach/',
         'allow' => array(
