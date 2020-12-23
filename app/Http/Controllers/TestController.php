@@ -14,12 +14,7 @@ class TestController extends Controller
     {
 
 //LTAI4GJgv3tcZBW7ZsCssTGt
-        $config = [
-            'driver' => 'oss',
-            'access_key' => 'LTAI4GJgv3tcZBW7ZsCssTGt',
-            'secret_key' => 'GmTkpgheMl3lNeOIbR7vK8thgV8jHP',
-
-        ];
+     
         $disk = \Storage::disk('qiniu');
 
         $res = $disk->put('file1.jpg', public_path('storage/8rusYTvUfew9flDtRCdcCzUy05HWmS0tT8kR01BJ.jpg'));
